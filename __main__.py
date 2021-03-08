@@ -6,7 +6,7 @@ print("Width =", GetSystemMetrics(0))
 print("Height =", GetSystemMetrics(1))
 
 
-size = width, height = 1920, 1080
+size = width, height = GetSystemMetrics(0), GetSystemMetrics(1)
 
 screen = pygame.display.set_mode(size)
 
