@@ -13,34 +13,34 @@ screen = pygame.display.set_mode(screen_size)
 background_colour = (50, 50, 100)
 
 # Ball varibables
-ball_radius = screen_width/96
-ball_x, ball_y = (screen_width - ball_radius * 4), (screen_height - ball_radius)/2
+ball_radius = screen_width//96
+ball_x, ball_y = (screen_width - ball_radius * 4), (screen_height - ball_radius)//2
 paddle1_ball_start_x,paddle1_ball_start_y = ball_x, ball_y
-paddle2_ball_start_x,paddle2_ball_start_y = 0, (screen_height - ball_radius)/2
-ball_x_speed, ball_y_speed = 0 - screen_width/2560, 0 - screen_width/2560
+paddle2_ball_start_x,paddle2_ball_start_y = 0, ball_y
+ball_x_speed, ball_y_speed = 0 - screen_width//2560, 0 - screen_width//2560
 
 # Paddle variables
-paddle_height = screen_height/6
-paddle_width = screen_width/48
+paddle_height = screen_height//6
+paddle_width = screen_width//48
 
 # Paddle1
-paddle1_x = screen_width/38.4 
-paddle1_y = screen_height / 2 - (paddle_height / 2)
+paddle1_x = screen_width//38
+paddle1_y = int(screen_height / 2 - (paddle_height / 2))
 
 # Paddle2
 paddle2_x = screen_width - paddle1_x - paddle_width
-paddle2_y = screen_height / 2 - (paddle_height / 2)
+paddle2_y = int(screen_height / 2 - (paddle_height / 2))
 
 # Middle line variables
-middle_line_width = paddle_width / 2
-middle_line_x = screen_width / 2 - (middle_line_width / 2)
+middle_line_width = paddle_width // 2
+middle_line_x = int(screen_width / 2 - (middle_line_width / 2))
 
 # Score variables 
 user1_points = 0
 user2_points = 0
 font = pygame.font.Font("freesansbold.ttf", 32)
-point1_x = screen_width / 192
-point_y = screen_height / 108
+point1_x = screen_width // 192
+point_y = screen_height // 108
 point2_x = 0
 # Display Variables
 pygame.display.set_caption("Pong")
@@ -74,6 +74,14 @@ while 1:
             if ball_y < paddle1_y + (paddle_height / 2):
                 ball_y_speed = -(abs(ball_y_speed))
             elif ball_y > paddle1_y + (paddle_height / 2): 
+                ball_y_speed = abs(ball_y_speed)
+            ball_x_speed = -ball_x_speed
+
+    if paddle2_x < (ball_x - ball_radius) < paddle1_x + 1 + paddle_width:
+        if paddle2_y <= ball_y <= (paddle2_y + paddle_height):
+            if ball_y < paddle2_y + (paddle_height / 2):
+                ball_y_speed = -(abs(ball_y_speed))
+            elif ball_y > paddle2_y + (paddle_height / 2): 
                 ball_y_speed = abs(ball_y_speed)
             ball_x_speed = -ball_x_speed
 
