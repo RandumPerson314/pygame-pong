@@ -15,6 +15,8 @@ background_colour = (50, 50, 100)
 # Ball varibables
 ball_radius = screen_width/96
 ball_x, ball_y = (screen_width - ball_radius * 4), (screen_height - ball_radius)/2
+paddle1_ball_start_x,paddle1_ball_start_y = ball_x, ball_y
+paddle2_ball_start_x,paddle2_ball_start_y = 0, (screen_height - ball_radius)/2
 ball_x_speed, ball_y_speed = 0 - screen_width/2560, 0 - screen_width/2560
 
 # Paddle variables
@@ -64,8 +66,8 @@ while 1:
     score2 = font.render("Score : " + str(user2_points), True, (255, 255, 255))
     score_width = score1.get_width()
     screen.blit(score1, (point1_x, point_y))
-    screen.blit(score2, (screen_width - score_width - 10, point_y)) #!find out what blit width is
-    
+    screen.blit(score2, (screen_width - score_width - 1, point_y))
+
     # Hits paddle1
     if paddle1_x - 1 < (ball_x - ball_radius) < paddle1_x + paddle_width:
         if paddle1_y <= ball_y <= (paddle1_y + paddle_height):
@@ -83,6 +85,14 @@ while 1:
     ball_x += ball_x_speed
     ball_y += ball_y_speed
     
+    # Ball goes out of bounds of user 1 and gives point to user 2
+    if ball_x <= 0:
+        user2_points += 1
+        ball_x, ball_y = paddle1_ball_start_x, paddle1_ball_start_y
+    if ball_x >= screen_width:
+        user1_points += 1
+        ball_x, ball_y = paddle2_ball_start_x, paddle2_ball_start_y 
+
     # Move paddle1 with W and S
     pressed = pygame.key.get_pressed()
     if pressed[pygame.K_w] and paddle1_y >= 0:
