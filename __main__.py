@@ -38,10 +38,8 @@ user1_points = 0
 user2_points = 0
 font = pygame.font.Font("freesansbold.ttf", 32)
 point1_x = screen_width // 192
-point1_y = screen_height // 108
-point2_x = 1  #!figure out how to display it tomorrow
-point2_y = 1 
-
+point_y = screen_height // 108
+point2_x = 0
 # Display Variables
 pygame.display.set_caption("Pong")
 icon = pygame.image.load("ping-pong-bat.png")
@@ -64,9 +62,10 @@ while 1:
     # Draw scores
     score1 = font.render("Score : " + str(user1_points), True, (255, 255, 255))
     score2 = font.render("Score : " + str(user2_points), True, (255, 255, 255))
-    screen.blit(score1, (point1_x, point1_y))
-    screen.blit(score2, (point2_x, point2_y)) #!find out what blit width is
-
+    score_width = score1.get_width()
+    screen.blit(score1, (point1_x, point_y))
+    screen.blit(score2, (screen_width - score_width - 10, point_y)) #!find out what blit width is
+    
     # Hits paddle1
     if paddle1_x - 1 < (ball_x - ball_radius) < paddle1_x + paddle_width:
         if paddle1_y <= ball_y <= (paddle1_y + paddle_height):
@@ -104,5 +103,5 @@ while 1:
        paddle2_y -= 1
     if pressed[pygame.K_DOWN] and paddle2_y < screen_height - paddle_height:
        paddle2_y += 1
-
+    
     pygame.display.flip()
